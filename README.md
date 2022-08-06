@@ -1,10 +1,9 @@
-# idris2-url
-WIP……  
+# idris2-playground
 
-A URL library for idris2, Based on [RFC 1738](https://www.rfc-wiki.org/wiki/RFC1738).
+试验场，用来测试和孵化各种类库。
 
-# Feature
-- [x] General Sytax
-- [x] HTTP URL parse and stringify
-- [ ] HTTP URL utils
-- [ ] FTP URL
+目前正在测试一个爬虫程序。 其附带几个类库
+- 爬虫程序 主程序
+- 爬虫框架
+- css 选择器
+- 工具函数库

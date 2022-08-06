@@ -1,4 +1,4 @@
-module Network.URL.Internal.Predicate
+module Screwdriver.Logic
 
 %default total
 

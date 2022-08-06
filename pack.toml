@@ -1,9 +1,32 @@
-[custom.all.url]
+[custom.all.screwdriver]
 type   = "local"
 path   = "."
-ipkg   = "url.ipkg"
+ipkg   = "screwdriver/screwdriver.ipkg"
 
-[custom.all.url-test]
+[custom.all.tentacle]
 type   = "local"
-path   = "test"
-ipkg   = "test.ipkg"
+path   = "."
+ipkg   = "tentacle/tentacle.ipkg"
+
+[custom.all.css-selector]
+type   = "local"
+path   = "."
+ipkg   = "css-selector/css-selector.ipkg"
+
+[custom.all.douban]
+type   = "local"
+path   = "."
+ipkg   = "douban/douban.ipkg"
+
+[custom.all.tls]
+type   = "github"
+url    = "https://github.com/octeep/idris2-tls"
+commit = "master"
+ipkg   = "tls.ipkg"
+
+
+[custom.all.http]
+type   = "github"
+url    = "https://github.com/octeep/idris2-http"
+commit = "master"
+ipkg   = "http.ipkg"

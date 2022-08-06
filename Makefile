@@ -1,15 +1,12 @@
-.PHONY: help
-help:
-	echo "help me"
+.PHONY: run
+run:
+	pack run douban/douban.ipkg
+
+
+.PHONY: build
+build: 
+	pack build douban/douban.ipkg
 
 .PHONY: test
 test: 
 	pack run test/test.ipkg
-
-.PHONY: test-http
-test-http: 
-	pack exec test/src/Test/HTTP.idr
-
-.PHONY: build
-build: 
-	pack build url.ipkg

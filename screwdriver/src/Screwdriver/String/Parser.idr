@@ -1,4 +1,4 @@
-module Network.URL.Internal.StringParser
+module Screwdriver.String.Parser
 
 import Data.String.Parser
 import Data.String
