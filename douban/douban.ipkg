@@ -13,7 +13,7 @@ authors = "Leo Liu"
 -- langversion
 
 -- packages to add to search path
-depends = base,contrib,network,sop,tls,http,elab-util
+depends = base,contrib
 
 -- modules to install
 -- modules =
@@ -23,7 +23,7 @@ main = Main
 
 -- name of executable
 executable = "douban"
--- opts =
+opts      = "--codegen node"
 sourcedir = "src"
 -- builddir =
 -- outputdir =
