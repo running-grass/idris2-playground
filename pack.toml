@@ -18,15 +18,7 @@ type   = "local"
 path   = "."
 ipkg   = "douban/douban.ipkg"
 
-[custom.all.tls]
-type   = "github"
-url    = "https://github.com/octeep/idris2-tls"
-commit = "master"
-ipkg   = "tls.ipkg"
-
-
-[custom.all.http]
-type   = "github"
-url    = "https://github.com/octeep/idris2-http"
-commit = "master"
-ipkg   = "http.ipkg"
+[custom.all.cheerio]
+type   = "local"
+path   = "."
+ipkg   = "cheerio/cheerio.ipkg"
