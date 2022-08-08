@@ -37,7 +37,7 @@ depends = base,contrib
 -- outputdir =
 
 -- script to run before building
--- prebuild =
+-- prebuild = "which pnpm && pnpm -g i cheerio || npm -g i cheerio"
 
 -- script to run after building
 -- postbuild =
@@ -46,7 +46,7 @@ depends = base,contrib
 -- preinstall =
 
 -- script to run after installing
-postinstall = "which pnpm && pnpm i | pwd || npm i"
+-- postinstall = "which pnpm && pnpm -g i || npm -g i"
 
 -- script to run before cleaning
 -- preclean =
