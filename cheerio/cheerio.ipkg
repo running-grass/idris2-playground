@@ -3,7 +3,7 @@ version = 0.1.0
 authors = "Leo Liu"
 -- maintainers =
 -- license =
--- brief =
+brief = "A cheerio binding for nodejs. provide css selector and attr getter."
 -- readme =
 -- homepage =
 -- sourceloc =
@@ -16,13 +16,18 @@ authors = "Leo Liu"
 -- depends =
 
 -- modules to install
--- modules =
-
+modules = Cheerio
+        , Cheerio.Data
+        , Cheerio.Utils
+        , Cheerio.Css
+        , Cheerio.Forms
+        , Cheerio.Traversing
+        , Cheerio.Attributes
+        , Cheerio.Manipulation
 -- main file (i.e. file to load at REPL)
 -- main =
 
 -- name of executable
--- executable =
 opts      = "--codegen node"
 sourcedir = "src"
 
@@ -41,7 +46,7 @@ depends = base,contrib
 -- preinstall =
 
 -- script to run after installing
--- postinstall =
+postinstall = "which pnpm && pnpm i | pwd || npm i"
 
 -- script to run before cleaning
 -- preclean =
