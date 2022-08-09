@@ -1,6 +1,6 @@
 .PHONY: run
 run: build
-	node build/exec/_tmp_node.js
+	node build/exec/cheerio
 
 .PHONY: build
 build: 

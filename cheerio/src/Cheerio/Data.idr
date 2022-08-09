@@ -8,3 +8,6 @@ data CheerioApi = MkCheerioApi AnyPtr
 
 export 
 data Cheerio = MkCheerio AnyPtr
+
+export
+data AnyNode : Type

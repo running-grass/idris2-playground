@@ -25,9 +25,10 @@ modules = Cheerio
         , Cheerio.Attributes
         , Cheerio.Manipulation
 -- main file (i.e. file to load at REPL)
--- main =
+main = Cheerio
 
 -- name of executable
+executable = "cheerio"
 opts      = "--codegen node"
 sourcedir = "src"
 

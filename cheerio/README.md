@@ -38,9 +38,46 @@ make run
 
 ## Traversing
 - [x] findd
+- [x] parentBy
 - [x] parent
-- [ ] parents
-- [ ] childrens
+- [x] parentsBy
+- [x] parents
+- [x] parentsUntil
+- [x] closestBy
+- [x] closest
+- [x] nextBy
+- [x] next
+- [x] nextAllBy
+- [x] nextAll
+- [x] nextUntil
+- [x] prevBy
+- [x] prev
+- [x] prevAllBy
+- [x] prevAll
+- [x] prevUntil
+- [x] siblingsBy
+- [x] siblings
+- [x] childrenBy
+- [x] children
+- [x] contentsBy
+- [x] contents
+- [ ] each
+- [ ] map
+- [ ] filterBY
+- [ ] filterWith
+- [ ] filterArray
+- [x] is 
+- [ ] not
+- [ ] has
+- [x] first
+- [x] last
+- [x] eq
+- [ ] getBy
+- [ ] get
+- [x] toArray
+- [ ] index
+- [ ] slice
+- [x] end
 
 
 ## Attributes
