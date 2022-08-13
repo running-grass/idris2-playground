@@ -22,3 +22,9 @@ ipkg   = "douban/douban.ipkg"
 type   = "local"
 path   = "."
 ipkg   = "cheerio/cheerio.ipkg"
+
+
+[custom.all.numeric]
+type   = "local"
+path   = "."
+ipkg   = "numeric/numeric.ipkg"
