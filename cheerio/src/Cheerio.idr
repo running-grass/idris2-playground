@@ -10,6 +10,7 @@ import public Cheerio.Manipulation
 
 import Data.Maybe
 
+
 %foreign "node:lambda: html => require('cheerio').load(html)"
 prim_load : String -> PrimIO CheerioApi
 
@@ -26,6 +27,13 @@ query : HasIO io => String -> CheerioApi -> io Cheerio
 query selector cheerioapi = primIO $ prim_query selector cheerioapi
 
 
+%foreign "node:lambda: (any, $) => $(any)"
+prim_wrap : AnyNode -> CheerioApi -> PrimIO Cheerio
+
+export
+wrap : HasIO io => AnyNode -> CheerioApi -> io Cheerio
+wrap any cheerioapi = primIO $ prim_wrap any cheerioapi
+
 
 main : IO ()
 main = do
@@ -34,3 +42,4 @@ main = do
   p <- find "p" h2
   t <- attr "id" p
   putStrLn $ fromMaybe "nothing" t
+  

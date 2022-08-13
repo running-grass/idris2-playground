@@ -47,7 +47,7 @@ depends = base,contrib
 -- preinstall =
 
 -- script to run after installing
--- postinstall = "which pnpm && pnpm -g i || npm -g i"
+postinstall = "pnpm i cheerio"
 
 -- script to run before cleaning
 -- preclean =

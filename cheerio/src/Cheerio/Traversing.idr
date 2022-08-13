@@ -1,6 +1,7 @@
 module Cheerio.Traversing
 
 import Cheerio.Data
+import Cheerio.Utils
 
 -- find
 
@@ -216,9 +217,9 @@ eq idx cheerio = primIO $ prim_eq (cast idx) cheerio
 
 
 -- end
-%foreign "node:lambda: (cheerio) => cheerio.toArray()"
-prim_toArray : Cheerio -> PrimIO (List AnyNode)
+%foreign "node:lambda: (toList, cheerio) => toList(cheerio.toArray())"
+prim_toArray : (AnyPtr -> Ptr (List AnyNode)) -> Cheerio -> PrimIO (List AnyNode)
 
 export
 toArray : HasIO io =>Cheerio -> io (List AnyNode) 
-toArray cheerio = primIO $ prim_toArray cheerio
+toArray cheerio = primIO $ prim_toArray arrayToList cheerio
