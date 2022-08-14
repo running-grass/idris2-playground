@@ -51,6 +51,18 @@ transpose : {rows: Nat} -> {cols: Nat} ->  (martix : Martix rows cols)  -> Marti
 transpose = Data.Vect.transpose
 
 public export
+zipWith : (MartixItem -> MartixItem -> MartixItem) -> Martix rows cols -> Martix rows cols -> Martix rows cols
+zipWith f left right = Data.Zippable.zipWith (zipWith f) left right
+ 
+public export
+(+) :  (martix : Martix rows cols) ->  (martix : Martix rows cols)  -> Martix rows cols
+(+) = Data.Martix.zipWith (+)
+
+public export
+(-) :  (martix : Martix rows cols) ->  (martix : Martix rows cols)  -> Martix rows cols
+(-) = Data.Martix.zipWith (-)
+
+public export
 prettyShow : (martix : Martix rows cols) -> String
 prettyShow martix = joinBy "\n" $ map show $ toList martix
 
