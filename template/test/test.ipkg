@@ -1,6 +1,6 @@
-package numeric
+package test
 version = 0.1.0
-authors = "grass"
+authors = "Leo Liu"
 -- maintainers =
 -- license =
 -- brief =
@@ -13,16 +13,16 @@ authors = "grass"
 -- langversion
 
 -- packages to add to search path
--- depends =
+depends = base, contrib, tester, template
 
 -- modules to install
-modules = Data.Martix
+-- modules =
 
 -- main file (i.e. file to load at REPL)
--- main =
+main = Main
 
 -- name of executable
--- executable =
+executable = "test"
 -- opts =
 sourcedir = "src"
 -- builddir =

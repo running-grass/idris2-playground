@@ -1,0 +1,4 @@
+[custom.all.template]
+type   = "local"
+path   = "."
+ipkg   = "template.ipkg"

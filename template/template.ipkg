@@ -1,4 +1,4 @@
-package numeric
+package template
 version = 0.1.0
 authors = "grass"
 -- maintainers =
@@ -16,7 +16,7 @@ authors = "grass"
 -- depends =
 
 -- modules to install
-modules = Data.Martix
+modules = Main
 
 -- main file (i.e. file to load at REPL)
 -- main =
