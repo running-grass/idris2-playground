@@ -13,18 +13,9 @@ data Martix : Nat -> Nat -> Type -> Type where
   MkMartix : Vect rows (Vect cols a) -> Martix rows cols a
 
 
-
-public export
-prettyShow : Show n => (martix : Martix rows cols n) -> String
-prettyShow (MkMartix martix) = joinBy "\n" $ map show $ toList martix
-
 public export
 Eq a => Eq (Martix rows cols a) where
   (MkMartix lv) == (MkMartix rv) = lv == rv
-
-public export
-Show a => Show (Martix rows cols a) where
-  show = prettyShow
 
 public export
 Functor (Martix rows cols) where
@@ -44,6 +35,22 @@ fromVects : Vect rows (Vect cols a) -> Martix rows cols a
 fromVects = MkMartix
 
 
+public export
+toVects : Martix rows cols a -> Vect rows (Vect cols a) 
+toVects (MkMartix v) = v
+
+
+public export
+prettyShow : Show n => (martix : Martix rows cols n) -> String
+prettyShow (MkMartix martix) = joinBy "\n" $ map show $ toList martix
+
+public export
+Show a => Show (Martix rows cols a) where
+  show = prettyShow
+
+private 
+dotProduct : Num a => Vect n a -> Vect n a -> a
+dotProduct x y = sum $ zipWith (*) x y
 
 public export
 zeros : (rows : Nat) -> (cols : Nat) -> (Martix rows cols Int)
@@ -92,5 +99,12 @@ transpose (MkMartix vects) = MkMartix $ Data.Vect.transpose vects
  -- zipWith f (MkMartix leftVects) (MkMartix rightVects) = MkMartix $ Data.Zippable.zipWith (zipWith f) leftVects rightVects
 
 public export
-(+) : Num n => (martix : Martix rows cols n) ->  (martix : Martix rows cols n)  -> Martix rows cols n
+(+) : Num n => (martix1 : Martix rows cols n) ->  (martix2 : Martix rows cols n)  -> Martix rows cols n
 (+) = zipWith (+)
+
+public export
+(*) : Num a => {l: Nat} -> {m: Nat} -> {n: Nat} -> (martix1 : Martix m l a) ->  (martix2 : Martix l n a)  -> Martix m n a
+(*) (MkMartix martix1) martix2 = let (MkMartix martix2') = transpose martix2 in
+  MkMartix $ martix1 <&> \r1 => 
+                          martix2' <&> \c1 => 
+                                        dotProduct r1 c1

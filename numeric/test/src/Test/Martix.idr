@@ -16,6 +16,9 @@ testZeros = [
     , test "test zeros 4" $ assertEq (zeros 0 0) $ fromVects []
 ]
 
+test2D : Martix 2 2 Int
+test2D = fromVects [ [1,2], [3,4] ]
+
 private
 testOnes : List Test
 testOnes = [
@@ -41,6 +44,9 @@ testUpdate = [
 
     , test "test transpose 1" $ assertEq (Data.Martix.transpose (fromVects [[1,2,3]])) $ fromVects [[1],[2], [3]]
     , test "test transpose 2" $ assertEq (Data.Martix.transpose (fromVects [[1,2,3], [4,5,6]])) $ fromVects [[1,4],[2,5], [3,6]]
+
+    , test "test *" $ assertEq (test2D * (identity 2)) test2D
+    , test "test +" $ assertEq (test2D + (zeros 2 2)) test2D
 ]
 
 export 
