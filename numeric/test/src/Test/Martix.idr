@@ -46,6 +46,7 @@ testUpdate = [
     , test "test transpose 2" $ assertEq (Data.Martix.transpose (fromVects [[1,2,3], [4,5,6]])) $ fromVects [[1,4],[2,5], [3,6]]
 
     , test "test *" $ assertEq (test2D * (identity 2)) test2D
+    , test "test *" $ assertEq (zeros 2 0 * (zeros 0 2)) $ zeros 2 2
     , test "test +" $ assertEq (test2D + (zeros 2 2)) test2D
 ]
 

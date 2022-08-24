@@ -88,9 +88,6 @@ public export
 repmat : Num ele => Vect n ele -> (rows : Nat) -> (cols : Nat) -> Martix rows (cols * n) ele
 repmat vect rows cols = MkMartix $ replicate rows $ concat $  Data.Vect.replicate cols vect
 
-public export
-transpose : {rows: Nat} -> {cols: Nat} ->  (martix : Martix rows cols n)  -> Martix cols rows n
-transpose (MkMartix vects) = MkMartix $ Data.Vect.transpose vects
 
 -- public export
 -- zipWith : Num n => {rows n: _} -> { cols n: _ } -> (Martix rows cols n) -> (Martix rows cols n) -> (Martix rows cols n)
@@ -103,8 +100,42 @@ public export
 (+) = zipWith (+)
 
 public export
+(-) : Neg n => (martix1 : Martix rows cols n) ->  (martix2 : Martix rows cols n)  -> Martix rows cols n
+(-) = zipWith (-)
+
+public export
+scalarMulti : Num a => a -> (martix1 : Martix rows cols a) -> Martix rows cols a
+scalarMulti a = map (* a)
+
+
+public export
+transpose : {rows: Nat} -> {cols: Nat} ->  (martix : Martix rows cols n)  -> Martix cols rows n
+transpose (MkMartix vects) = MkMartix $ Data.Vect.transpose vects
+
+-- 共轭
+-- 共轭转置
+-- 行列式
+-- 特征值与特征向量
+
+
+public export
 (*) : Num a => {l: Nat} -> {m: Nat} -> {n: Nat} -> (martix1 : Martix m l a) ->  (martix2 : Martix l n a)  -> Martix m n a
 (*) (MkMartix martix1) martix2 = let (MkMartix martix2') = transpose martix2 in
   MkMartix $ martix1 <&> \r1 => 
                           martix2' <&> \c1 => 
                                         dotProduct r1 c1
+
+public export
+minor : (row: Fin (S n)) -> (col: Fin (S n)) -> (martix1 : Martix (S n) (S n) a)  -> Martix n n a 
+minor row col (MkMartix martix1)  = fromVects . deleteAt row . map (deleteAt col) $ martix1
+
+public export
+algeCofactor : Neg a => (row: Fin (S n)) -> (col: Fin (S n)) -> (martix1 : Martix (S n) (S n) a)  -> Martix n n a
+algeCofactor row col martix1 = minor row col martix1 <&> (* sign)
+  where
+    sign : a
+    sign = if mod ((cast row) + (cast col)) 2 == 0 then 1 else -1
+
+public export
+trace : Num a => Martix n n a -> a
+trace (MkMartix martix1) = sum $ diag martix1

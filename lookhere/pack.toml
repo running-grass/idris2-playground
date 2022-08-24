@@ -1,0 +1,4 @@
+[custom.all.lookhere]
+type   = "local"
+path   = "."
+ipkg   = "lookhere.ipkg"
