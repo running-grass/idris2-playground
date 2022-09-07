@@ -43,6 +43,7 @@ main = do
   http <- HTTP.require
   server <- listen' $ routeDef "\{folder}/"
   pure ()
+  putStrLn "开始监听3000端口"
   -- ignore $ setImmediate $ ignore $ http.get "http://localhost:3000/static/run" defaultOptions $ \res => do
   --     putStrLn $ show res.statusCode
   --     res.onData $ putStrLn . show
