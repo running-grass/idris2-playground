@@ -2,11 +2,20 @@ module Data.Martix
 
 import Data.Vect
 import Data.String
-
+import Data.Zippable
+import Data.Maybe
 -- public export
 -- MartixItem : Type
 -- MartixItem = Int 
 
+apply2in2 : (a -> b -> c) -> b -> (a -> c)
+apply2in2 f y = \x => f x y
+
+apply2in3 : (a -> b -> c -> d) -> b -> (a -> c -> d)
+apply2in3 f y = \x,z => f x y z
+
+apply3in3 : (a -> b -> c -> d) -> c -> (a -> b -> d)
+apply3in3 f z = \x,y => f x y z
 
 export
 data Martix : Nat -> Nat -> Type -> Type where
@@ -42,7 +51,7 @@ toVects (MkMartix v) = v
 
 public export
 prettyShow : Show n => (martix : Martix rows cols n) -> String
-prettyShow (MkMartix martix) = joinBy "\n" $ map show $ toList martix
+prettyShow (MkMartix martix) = (joinBy "\n" $ map show $ toList martix) ++ "\n"
 
 public export
 Show a => Show (Martix rows cols a) where
@@ -52,13 +61,18 @@ private
 dotProduct : Num a => Vect n a -> Vect n a -> a
 dotProduct x y = sum $ zipWith (*) x y
 
+
+public export
+fill : (rows : Nat) -> (cols : Nat) -> t -> (Martix rows cols t)
+fill rows cols t0 = MkMartix $ replicate rows $ replicate cols t0
+
 public export
 zeros : (rows : Nat) -> (cols : Nat) -> (Martix rows cols Int)
-zeros rows cols = MkMartix $ replicate rows $ replicate cols 0
+zeros rows cols = fill rows cols 0
 
 public export
 ones : (rows : Nat) -> (cols : Nat) -> (Martix rows cols Int)
-ones rows cols = MkMartix $ replicate rows $ replicate cols 1
+ones rows cols = fill rows cols  1
 
 public export
 updateAt : (row : Fin rows) -> (col : Fin cols) -> (updateFun: a -> a) -> (Martix rows cols a) -> Martix rows cols a
@@ -67,6 +81,41 @@ updateAt row col f (MkMartix vects) = MkMartix $ updateAt row (updateAt col f) v
 public export
 replaceAt : (row : Fin rows) -> (col : Fin cols) -> (ele) -> (Martix rows cols ele) -> (Martix rows cols ele)
 replaceAt row col ele = updateAt row col $ const ele
+
+public export
+findIndex : (ele -> Bool) ->  (Martix rows cols ele) -> Maybe (Fin rows, Fin cols)
+findIndex p (MkMartix vects) = go vects
+  where
+    go : Vect a (Vect cols ele)  -> Maybe (Fin a, Fin cols)
+    go [] = Nothing
+    go (v :: vs) = case findIndex p v of
+      Just fc => Just (FZ, fc)
+      Nothing => case go vs of
+                  Just (fa, fb) => Just (FS fa, fb)
+                  Nothing => Nothing
+
+-- public export
+mapVectWithIndex : {auto len: Nat} -> (ele -> Fin len -> b) -> Vect len ele -> Vect len b
+mapVectWithIndex f as = zip range as <&> \(idx, e) => f e idx
+
+public export
+mapWithIndex : {auto rows: Nat} -> {auto cols: Nat} -> (ele -> (Fin rows, Fin cols) -> b) ->  Martix rows cols ele ->  Martix rows cols b
+mapWithIndex f (MkMartix vects) = MkMartix $ zip range vects <&> \(row, v) => zip range v <&> \(col, e) => f e (row, col)
+
+
+filter' : (ele -> Bool) ->  (Martix rows cols ele) -> List ele
+filter' p (MkMartix vects) = filter p lists
+  where
+    lists : List ele
+    lists = concat . map toList $ vects
+
+public export
+findIndices : {auto rows: Nat} -> {auto cols: Nat} ->  (ele -> Bool) ->  (Martix rows cols ele) -> List (Fin rows, Fin cols)
+findIndices p martix =  mapMaybe id $ filter' isJust mapped
+  where
+    mapped : Martix rows cols (Maybe (Fin rows, Fin cols))
+    mapped = mapWithIndex {rows = rows} {cols = cols} (\el,(fr, fc) => if p el then (Just (fr, fc)) else Nothing) martix
+
 
 -- a : Martix rows cols String -> Martix rows cols String
 public export

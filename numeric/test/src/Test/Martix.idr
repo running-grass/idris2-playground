@@ -48,6 +48,8 @@ testUpdate = [
     , test "test *" $ assertEq (test2D * (identity 2)) test2D
     , test "test *" $ assertEq (zeros 2 0 * (zeros 0 2)) $ zeros 2 2
     , test "test +" $ assertEq (test2D + (zeros 2 2)) test2D
+
+    , test "test findIndex" $ assertEq (findIndex (== 2) test2D) (Just (0, 1))
 ]
 
 export 

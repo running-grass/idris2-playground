@@ -28,3 +28,9 @@ ipkg   = "cheerio/cheerio.ipkg"
 type   = "local"
 path   = "."
 ipkg   = "numeric/numeric.ipkg"
+
+
+[custom.all.game-2048]
+type   = "local"
+path   = "."
+ipkg   = "game-2048.ipkg"
