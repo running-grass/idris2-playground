@@ -15,13 +15,21 @@ import Data.Vect
 Tile : Type
 Tile = Int
 
+
 record  GameField (rows: Nat) (cols: Nat) where
   constructor MkGameField
   gameField : Martix rows cols Tile
 
 
+prettyShowRow : (Vect cols Int) -> String
+prettyShowRow vect= (concat $ map (\el => "\t" ++ show el)vect) ++ "\n\n\n"
+
+prettyShow : GameField rows cols -> String
+prettyShow (MkGameField martix) = concat $ map prettyShowRow $ (toVects martix) 
+
+
 Show (GameField r c) where
-  show (MkGameField s) = show s
+  show s = prettyShow s
 
 Eq (GameField r c) where
   (MkGameField s1) == (MkGameField s2) = s1 == s2
@@ -92,7 +100,7 @@ gameLoop gameField = do
             "d" => newMove moveDown gameField
             "s" => putStrLn "stop!"
             _   => do 
-              putStrLn "错误的命令"
+              putStrLn "Invalid command!!!"
               performInput gameField
 
         newMove : (GameField rows cols -> GameField rows cols) -> GameField rows cols -> App Init ()

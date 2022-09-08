@@ -4,23 +4,10 @@ import Data.Vect
 import Data.String
 import Data.Zippable
 import Data.Maybe
--- public export
--- MartixItem : Type
--- MartixItem = Int 
-
-apply2in2 : (a -> b -> c) -> b -> (a -> c)
-apply2in2 f y = \x => f x y
-
-apply2in3 : (a -> b -> c -> d) -> b -> (a -> c -> d)
-apply2in3 f y = \x,z => f x y z
-
-apply3in3 : (a -> b -> c -> d) -> c -> (a -> b -> d)
-apply3in3 f z = \x,y => f x y z
 
 export
 data Martix : Nat -> Nat -> Type -> Type where
   MkMartix : Vect rows (Vect cols a) -> Martix rows cols a
-
 
 public export
 Eq a => Eq (Martix rows cols a) where
