@@ -24,10 +24,10 @@ path   = "."
 ipkg   = "cheerio/cheerio.ipkg"
 
 
-[custom.all.martix]
+[custom.all.matrix]
 type   = "local"
 path   = "."
-ipkg   = "martix/martix.ipkg"
+ipkg   = "matrix/matrix.ipkg"
 
 
 [custom.all.game-2048]

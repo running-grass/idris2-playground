@@ -3,7 +3,7 @@ module Main
 import System
 import System.Random
 
-import Data.Martix
+import Data.Matrix
 import Data.String
 import Data.Fin
 import Data.Nat
@@ -17,13 +17,13 @@ Tile = Int
 
 record  GameField (rows: Nat) (cols: Nat) where
   constructor MkGameField
-  gameField : Martix rows cols Tile
+  gameField : Matrix rows cols Tile
 
 prettyShowRow : (Vect cols Int) -> String
 prettyShowRow vect= (concat $ map (\el => "\t" ++ show el)vect) ++ "\n\n\n"
 
 prettyShow : GameField rows cols -> String
-prettyShow (MkGameField martix) = concat $ map prettyShowRow $ (toVects martix) 
+prettyShow (MkGameField matrix) = concat $ map prettyShowRow $ (toVects matrix) 
 
 
 Show (GameField r c) where
@@ -32,8 +32,8 @@ Show (GameField r c) where
 Eq (GameField r c) where
   (MkGameField s1) == (MkGameField s2) = s1 == s2
 
-toMartix :  GameField rows cols -> Martix rows cols Int
-toMartix (MkGameField m) = m
+toMatrix :  GameField rows cols -> Matrix rows cols Int
+toMatrix (MkGameField m) = m
 
 up : Vect (len) Int -> Vect (len) Int
 up [] = []
@@ -52,23 +52,23 @@ moveRight : GameField rows cols-> GameField rows cols
 moveRight (MkGameField m) = MkGameField $ fromVects $ (map (reverse . join . up . reverse)) $ toVects m
 
 moveUp : {rows : Nat} -> {cols : Nat} -> GameField rows cols-> GameField rows cols
-moveUp  (MkGameField m) = MkGameField $ transpose $ toMartix $ moveLeft $  MkGameField $ transpose  m
+moveUp  (MkGameField m) = MkGameField $ transpose $ toMatrix $ moveLeft $  MkGameField $ transpose  m
 
 
 moveDown : {rows : Nat} -> {cols : Nat} -> GameField rows cols-> GameField rows cols
-moveDown  (MkGameField m) = MkGameField $ transpose $ toMartix $ moveRight $  MkGameField $ transpose  m
+moveDown  (MkGameField m) = MkGameField $ transpose $ toMatrix $ moveRight $  MkGameField $ transpose  m
 
 -- 获取可以使用的titles
 getFreeTiles : {rows: Nat} -> {cols: Nat} -> GameField rows cols -> List (Fin rows, Fin cols)
-getFreeTiles (MkGameField martix) = findIndices {rows} {cols} (== 0) martix
+getFreeTiles (MkGameField matrix) = findIndices {rows} {cols} (== 0) matrix
 
 addTileToRandomPos : {rows: Nat} -> {cols: Nat} -> GameField rows cols -> IO (GameField rows cols)
-addTileToRandomPos game@(MkGameField martix) = do
+addTileToRandomPos game@(MkGameField matrix) = do
   let freeTiles = getFreeTiles game 
   it <- rndFin $ length freeTiles
   case getAt (finToNat it) freeTiles of
     Nothing => pure game
-    Just (r,c ) => pure $ MkGameField $ replaceAt r c 2 martix
+    Just (r,c ) => pure $ MkGameField $ replaceAt r c 2 matrix
 
 
 hasAvailableMoves : GameField rows cols -> Bool
