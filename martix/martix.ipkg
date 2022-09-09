@@ -1,9 +1,9 @@
-package test
+package martix
 version = 0.1.0
 authors = "grass"
 -- maintainers =
 -- license =
--- brief =
+brief = "Martix operation library."
 -- readme =
 -- homepage =
 -- sourceloc =
@@ -13,16 +13,16 @@ authors = "grass"
 -- langversion
 
 -- packages to add to search path
-depends = base, contrib, numeric, tester
+-- depends =
 
 -- modules to install
--- modules =
+modules = Data.Martix
 
 -- main file (i.e. file to load at REPL)
-main = Main
+-- main =
 
 -- name of executable
-executable = "test"
+-- executable =
 -- opts =
 sourcedir = "src"
 -- builddir =

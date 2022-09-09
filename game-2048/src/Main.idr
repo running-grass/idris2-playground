@@ -15,11 +15,9 @@ import Data.Vect
 Tile : Type
 Tile = Int
 
-
 record  GameField (rows: Nat) (cols: Nat) where
   constructor MkGameField
   gameField : Martix rows cols Tile
-
 
 prettyShowRow : (Vect cols Int) -> String
 prettyShowRow vect= (concat $ map (\el => "\t" ++ show el)vect) ++ "\n\n\n"
@@ -33,9 +31,6 @@ Show (GameField r c) where
 
 Eq (GameField r c) where
   (MkGameField s1) == (MkGameField s2) = s1 == s2
-
--- Functor (GameField r c) where
---   map f (MkGameField s1) = MkGameField $ f s1
 
 toMartix :  GameField rows cols -> Martix rows cols Int
 toMartix (MkGameField m) = m

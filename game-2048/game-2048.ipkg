@@ -13,7 +13,7 @@ authors = "grass"
 -- langversion
 
 -- packages to add to search path
-depends = base, contrib, numeric
+depends = base, contrib, martix
 
 -- modules to install
 modules = Main

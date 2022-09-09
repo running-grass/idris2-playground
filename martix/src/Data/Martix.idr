@@ -35,8 +35,6 @@ public export
 toVects : Martix rows cols a -> Vect rows (Vect cols a) 
 toVects (MkMartix v) = v
 
-
-public export
 prettyShow : Show n => (martix : Martix rows cols n) -> String
 prettyShow (MkMartix martix) = (joinBy "\n" $ map show $ toList martix) ++ "\n"
 
@@ -103,7 +101,6 @@ findIndices p martix =  mapMaybe id $ filter' isJust mapped
     mapped : Martix rows cols (Maybe (Fin rows, Fin cols))
     mapped = mapWithIndex {rows = rows} {cols = cols} (\el,(fr, fc) => if p el then (Just (fr, fc)) else Nothing) martix
 
-
 -- a : Martix rows cols String -> Martix rows cols String
 public export
 eye : (rows : Nat) -> (cols : Nat) -> Martix rows cols Int
@@ -123,13 +120,6 @@ identity rows = eye rows rows
 public export
 repmat : Num ele => Vect n ele -> (rows : Nat) -> (cols : Nat) -> Martix rows (cols * n) ele
 repmat vect rows cols = MkMartix $ replicate rows $ concat $  Data.Vect.replicate cols vect
-
-
--- public export
--- zipWith : Num n => {rows n: _} -> { cols n: _ } -> (Martix rows cols n) -> (Martix rows cols n) -> (Martix rows cols n)
--- zipWith  (MkMartix lv) (MkMartix rv) = MkMartix rv
-
- -- zipWith f (MkMartix leftVects) (MkMartix rightVects) = MkMartix $ Data.Zippable.zipWith (zipWith f) leftVects rightVects
 
 public export
 (+) : Num n => (martix1 : Martix rows cols n) ->  (martix2 : Martix rows cols n)  -> Martix rows cols n
