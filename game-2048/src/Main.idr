@@ -112,21 +112,13 @@ gameLoop gameField = do
               
 app : App Init ()
 app = do
-  -- putStrLn "输入行列数以开始游戏："
-  -- rows' <- getLine
-  -- row <- pure $ stringToNatOrZ rows'
-  let row = 5
+  putStrLn "Enter the size to start the game。eg. 5"
+  rows' <- getLine
+  row <- pure $ stringToNatOrZ rows'
+  -- let row = 4
   game <- pure $ MkGameField $ fill row row 0
   gameLoop game
 
 main : IO ()
 main = do 
   run app
-  -- putStrLn "输入行列数以开始游戏："
-  -- rows' <- getLine
-  -- -- row <- pure $ stringToNatOrZ rows'
-  -- let row = 5
-  -- game <- pure $ MkGameField $ fill row row 0
-  -- -- game2 <- addTileToRandomPos game
-
-  -- gameLoop game
