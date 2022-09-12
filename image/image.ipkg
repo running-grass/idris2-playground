@@ -1,0 +1,34 @@
+package image
+version = 0.1.0
+authors = "Leo Liu"
+-- maintainers =
+-- license =
+-- brief =
+-- readme =
+-- homepage =
+-- sourceloc =
+-- bugtracker =
+
+-- the Idris2 version required (e.g. langversion >= 0.5.1)
+-- langversion
+
+-- packages to add to search path
+-- depends =
+
+-- modules to install
+-- modules =
+
+-- main file (i.e. file to load at REPL)
+main = Main
+
+-- name of executable
+executable = "image"
+-- opts =
+sourcedir = "src"
+-- builddir =
+-- outputdir =
+
+prebuild = "make -C libjpeg_glue"
+postbuild = "make -C libjpeg_glue buildcopy"
+postinstall = "make -C libjpeg_glue install"
+postclean = "make -C libjpeg_glue clean"

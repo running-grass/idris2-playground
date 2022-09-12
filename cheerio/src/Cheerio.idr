@@ -34,7 +34,6 @@ export
 wrap : HasIO io => AnyNode -> CheerioApi -> io Cheerio
 wrap any cheerioapi = primIO $ prim_wrap any cheerioapi
 
-
 main : IO ()
 main = do
   che <- load "<h2 class=\"title\"><p id=\"world\">Hello world22</p><span>span123</span></h2>"
