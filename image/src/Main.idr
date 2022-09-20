@@ -2,8 +2,10 @@ module Main
 import System.File
 import System.File.Buffer
 import Data.Buffer
+import Data.String
 import System.FFI
-import Data.Buffer
+import Data.Vect
+import Data.Matrix
 
 rlib : String -> String
 rlib fn = "C:" ++ fn ++ ",libidrisjpeg"
@@ -30,12 +32,19 @@ prim__readJpeg : String -> PrimIO JpegDecompress
 readJpeg : HasIO io => String -> io JpegDecompress
 readJpeg str = primIO $ prim__readJpeg str
 
+toVect : HasIO io => Buffer -> io (size ** Vect size Bits8)
+toVect buffer = let size = !(rawSize buffer)
+  in go (cast size) $ pure (0 ** [])
+  where
+  go : Nat -> io (n ** Vect n Bits8) -> io (m ** Vect m Bits8)
+  go 0 dvect = dvect
+  go s dvect = do 
+    (n ** vs) <- dvect
+    b <- getBits8 buffer $ cast s
+    pure $ (S n ** b :: vs)
 
-%foreign (rlib "getString")
-prim_getString : Ptr String -> PrimIO String
-
-getString : HasIO io => Ptr String -> io String
-getString ptr = primIO $ prim_getString ptr
+-- toMatrix : {m: Nat} -> {n: Nat} -> Vect (m * n * 3) Bits8 -> Matrix m n (Bits8, Bits8, Bits8)
+-- toMatrix vect = ?t
 
 main : IO ()
 main = do
@@ -52,8 +61,8 @@ main = do
   case buffer' of
     Nothing => pure ()
     Just buffer => do 
-      -- TODO 向后错了四个字节
       setString' buffer bufferPtr size
+
       putStrLn $ "total size: " ++ show !(rawSize buffer)
       putStrLn "===== head start ======"
       putStrLn $ show !(getBits8 buffer 0)
@@ -70,3 +79,13 @@ main = do
       putStrLn $ show !(getBits8 buffer (size - 1))
       putStrLn "===== tail end ======"
       putStrLn $ show !(getBits8 buffer (size))
+
+      str <- getString buffer 0 (size) 
+      let chars = unpack str
+          -- bss = fromList cast chars
+          c0 : Maybe Bits8 =  (head' chars) <&> cast 
+          c' : Maybe Bits8 =  (last' chars) <&> cast 
+          -- b = index 0 bss
+      putStrLn $ show $  c0 
+      putStrLn $ show $  c'
+      -- pure () 

@@ -24,7 +24,7 @@ main = Main
 
 -- name of executable
 executable = "lookhere"
-opts      = "--total --cg node"
+opts      = "--cg node"
 -- name of executable
 -- executable =
 -- opts =

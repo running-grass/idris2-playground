@@ -13,7 +13,7 @@ authors = "Leo Liu"
 -- langversion
 
 -- packages to add to search path
--- depends =
+depends = base, matrix
 
 -- modules to install
 -- modules =

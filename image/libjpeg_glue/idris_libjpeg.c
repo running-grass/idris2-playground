@@ -9,7 +9,7 @@
 
 #define THROW(action, message) { \
   printf("ERROR in line %d while %s:\n%s\n", __LINE__, action, message); \
-  retval = -1;  goto bailout; \
+  goto bailout; \
 }
 
 #define THROW_TJ(action)  THROW(action, tjGetErrorStr2(tjInstance))
@@ -28,27 +28,6 @@ const char *colorspaceName[TJ_NUMCS] = {
   "RGB", "YCbCr", "GRAY", "CMYK", "YCCK"
 };
 
-tjscalingfactor *scalingFactors = NULL;
-int numScalingFactors = 0;
-
-
-/* DCT filter example.  This produces a negative of the image. */
-
-static int customFilter(short *coeffs, tjregion arrayRegion,
-                        tjregion planeRegion, int componentIndex,
-                        int transformIndex, tjtransform *transform)
-{
-  int i;
-
-  for (i = 0; i < arrayRegion.w * arrayRegion.h; i++)
-    coeffs[i] = -coeffs[i];
-
-  return 0;
-}
-
-
-
-
 
 typedef struct {
   int image_width;
@@ -59,27 +38,16 @@ typedef struct {
 jpeg_decompress* read_JPEG_file(char *filename)
 {
 
-  tjscalingfactor scalingFactor = { 1, 1 };
-  int outSubsamp = -1, outQual = -1;
-  tjtransform xform;
   int flags = 0;
   int width, height;
-  char *inFormat, *outFormat;
   FILE *jpegFile = NULL;
   unsigned char *imgBuf = NULL, *jpegBuf = NULL;
-  int retval = 0, i, pixelFormat = TJPF_UNKNOWN;
+  int  pixelFormat = TJPF_UNKNOWN;
   tjhandle tjInstance = NULL;
-
-  if ((scalingFactors = tjGetScalingFactors(&numScalingFactors)) == NULL)
-    THROW_TJ("getting scaling factors");
-  memset(&xform, 0, sizeof(tjtransform));
-
 
   /* Input image is a JPEG image.  Decompress and/or transform it. */
   long size;
   int inSubsamp, inColorspace;
-  int doTransform = (xform.op != TJXOP_NONE || xform.options != 0 ||
-                      xform.customFilter != NULL);
   unsigned long jpegSize;
 
   /* Read the JPEG file into memory. */
@@ -105,14 +73,6 @@ jpeg_decompress* read_JPEG_file(char *filename)
   if (tjDecompressHeader3(tjInstance, jpegBuf, jpegSize, &width, &height,
                           &inSubsamp, &inColorspace) < 0)
     THROW_TJ("reading JPEG header");
-
-  /* Scaling and/or a non-JPEG output image format and/or compression options
-      have been selected, so we need to decompress the input/transformed
-      image. */
-  // width = width;
-  // height = height;
-  if (outSubsamp < 0)
-    outSubsamp = inSubsamp;
 
   pixelFormat = TJPF_RGB;
   if ((imgBuf = (unsigned char *)tjAlloc(width * height * tjPixelSize[pixelFormat])) == NULL)
@@ -146,8 +106,8 @@ jpeg_decompress* read_JPEG_file(char *filename)
 char* getString(void *p) {
     return (char*)p;
 }
-
 void setBufferString2(void* buffer, void* str, int len) {
     // Buffer* b = buffer;
+    // FIXME 向后错了四个字节,这里应该是buffer->size的
     memcpy((buffer), str, len);
 }

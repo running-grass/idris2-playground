@@ -19,6 +19,7 @@ sendError :
 sendError st str ctx = do
   sendText str ctx >>= status st
 
+
 routeDef :
   String
   -> StaticRequest String
@@ -29,11 +30,12 @@ routeDef folder =
     in
       parseUrl' urlError :>
         routes' routingError
-          [ get $ pattern "/*" :> hStatic folder $ flip $ \ctx =>
+          [ get $ pattern "/static/*" :> hStatic folder $ flip $ \ctx =>
               \case
                 StatError e => sendError INTERNAL_SERVER_ERROR ("File error: " <+> TyTTP.Core.Error.message e) ctx
                 NotAFile s => sendError NOT_FOUND ("Could not found file: " <+> s) ctx
           ]
+
 
 main : IO ()
 main = do
@@ -44,7 +46,3 @@ main = do
   server <- listen' $ routeDef "\{folder}/"
   pure ()
   putStrLn "开始监听3000端口"
-  -- ignore $ setImmediate $ ignore $ http.get "http://localhost:3000/static/run" defaultOptions $ \res => do
-  --     putStrLn $ show res.statusCode
-  --     res.onData $ putStrLn . show
-  --     server.close
