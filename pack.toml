@@ -33,4 +33,9 @@ ipkg   = "matrix/matrix.ipkg"
 [custom.all.game-2048]
 type   = "local"
 path   = "."
-ipkg   = "game-2048.ipkg"
+ipkg   = "game-2048/game-2048.ipkg"
+
+[custom.all.image]
+type   = "local"
+path   = "."
+ipkg   = "image/image.ipkg"

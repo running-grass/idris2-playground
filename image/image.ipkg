@@ -16,10 +16,10 @@ authors = "Leo Liu"
 depends = base, matrix
 
 -- modules to install
--- modules =
+modules = Image
 
 -- main file (i.e. file to load at REPL)
-main = Main
+main = Image
 
 -- name of executable
 executable = "image"
