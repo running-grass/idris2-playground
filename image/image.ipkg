@@ -13,10 +13,13 @@ authors = "Leo Liu"
 -- langversion
 
 -- packages to add to search path
-depends = base, matrix
+depends = base, matrix, sop , prim
 
 -- modules to install
 modules = Image
+        , Image.Type
+        , Image.Jpeg
+        , Image.Utils
 
 -- main file (i.e. file to load at REPL)
 main = Image
