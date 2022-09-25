@@ -165,3 +165,12 @@ algeCofactor row col matrix1 = minor row col matrix1 <&> (* sign)
 public export
 trace : Num a => Matrix n n a -> a
 trace (MkMatrix matrix1) = sum $ diag matrix1
+
+
+export
+flipVer : Matrix m n a -> Matrix m n a
+flipVer (MkMatrix vects) = MkMatrix $ reverse vects
+
+export
+flipHor : Matrix m n a -> Matrix m n a
+flipHor (MkMatrix vects) = MkMatrix $ map reverse vects

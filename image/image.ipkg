@@ -3,7 +3,7 @@ version = 0.1.0
 authors = "Leo Liu"
 -- maintainers =
 -- license =
--- brief =
+brief = "Image Processing Library."
 -- readme =
 -- homepage =
 -- sourceloc =
@@ -22,10 +22,10 @@ modules = Image
         , Image.Utils
 
 -- main file (i.e. file to load at REPL)
-main = Image
+-- main = Image
 
 -- name of executable
-executable = "image"
+-- executable = "image"
 -- opts =
 sourcedir = "src"
 -- builddir =

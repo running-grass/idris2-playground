@@ -4,6 +4,8 @@ import System.File
 import System.File.Buffer
 import Data.Buffer
 
+-- TODO need finish
+
 processBuffer : Buffer -> IO ()
 processBuffer buffer = do
   type <- getString buffer 0 2

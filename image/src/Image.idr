@@ -10,10 +10,10 @@ import Data.Matrix
 import public Image.Type
 import public Image.Jpeg
 
-main : IO ()
-main = do
-  let filePath = "./test/grass32.jpg"
-  (Just (_ ** _ ** jpg)) <- loadJpeg filePath
-    | Nothing => pure ()
-  putStrLn $ show jpg
-  pure ()
+export
+flipHor : Image m n -> Image m n
+flipHor (MkImage matrix) = MkImage $ flipHor matrix
+
+export
+flipVer : Image m n -> Image m n
+flipVer (MkImage matrix) = MkImage $ flipVer matrix

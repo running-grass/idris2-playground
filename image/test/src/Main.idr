@@ -15,22 +15,30 @@ jpgMatrix = fromVects [
     ]
 
 private
-tests : Matrix 2 3 RGB -> List Test
-tests vects = [
+testsJpg : Matrix 2 3 RGB -> List Test
+testsJpg vects = [
     test "test load jpg" $ assertEq vects jpgMatrix
 ]
+
+private
+testsFunc : List Test
+testsFunc = [
+    test "test flip hor" $ assertEq jpgMatrix $ flipHor . flipHor $ jpgMatrix
+    , test "test flip ver" $ assertEq jpgMatrix $ flipVer . flipVer $ jpgMatrix
+    , test "test flip ver and hor" $ assertEq jpgMatrix $ flipHor . flipVer . flipVer . flipHor$ jpgMatrix
+]
+
 
 public export
 main : IO ()
 main = do
-    -- (Just dir) <- currentDir
-    --     | Nothing => putStrLn "get current directory fail"
-    -- putStrLn dir
-    let filePath = "/Users/grass/workspace/idris2-playground/image/test/grass32.jpg"
+    (Just dir) <- currentDir
+        | Nothing => putStrLn "get current directory fail"
+    let filePath = dir ++ "/test/grass32.jpg"
     (Just (2 ** 3 ** (MkImage jpg))) <- loadJpeg filePath
         | Just _ => putStrLn "image size error"
         | Nothing => putStrLn "loadJpeg error"
-    success <- runTests $ tests jpg
+    success <- runTests $ testsJpg jpg ++ testsFunc
     if success
         then putStrLn "All testHeading passed"
         else putStrLn "Not all testHeading passed"
