@@ -1,4 +1,3 @@
+WIP……
 
-super WIP.
-
-need libjpg c library.
+need libjpeg-turbo c library.
