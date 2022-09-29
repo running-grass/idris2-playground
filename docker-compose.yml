@@ -1,0 +1,7 @@
+# 该文件仅供开发阶段使用
+version: '3'
+services:
+  idris2:
+    build: .
+    volumes:
+      - .:/root/src

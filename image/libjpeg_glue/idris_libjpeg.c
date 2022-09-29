@@ -4,7 +4,7 @@
 #include <errno.h>
 #include <turbojpeg.h>
 
-#include <buffer.h>
+// #include <buffer.h>
 
 
 #define THROW(action, message) { \
